@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import TextButton from "./buttons/TextButton";
 import OutlinedButton from "./buttons/OutlinedButton";
 import Button from "./buttons/Button";
+import Logo from "./Logo";
 
 
 function Navbar() {
@@ -11,9 +12,7 @@ function Navbar() {
     return (
         <div className="flex px-4 md:px-8 justify-between w-full h-20">
 
-            <div className="self-center text-3xl font-bold items-center w-40 flex justify-start">
-                LOGO
-            </div>
+            <Logo />
 
             <div className="flex items-center h-full">
                 <ul className="flex items-center h-full w-max gap-3">
