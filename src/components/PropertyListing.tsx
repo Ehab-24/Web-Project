@@ -1,8 +1,8 @@
 import PropertyCard from "./cards/PropertyCard"
 
-export default function PropertyListing({ className }: { className: string }) {
+export default function PropertyListing() {
     return (
-        <div className={`w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-20 ${className}`}>
+        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-20">
             <PropertyCard title="Sobha Heartland | Villas" image="../../public/Screenshot 2024-10-03 at 22.55.40.png" description="4 Bedroom Villa for Rent in Al Barsha" location="1 Villa, Al Barsha, Dubai" price={189} rating={4.89} time="Night" />
 
             <PropertyCard title="Luxury Apartment | Downtown" image="../../public/Screenshot 2024-10-03 at 22.55.51.png" description="2 Bedroom Apartment for Sale in Downtown" location="Downtown, Dubai" price={350} rating={4.75} time="Night" />

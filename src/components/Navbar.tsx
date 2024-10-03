@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import TextButton from "./buttons/TextButton";
+import OutlinedButton from "./buttons/OutlinedButton";
+import Button from "./buttons/Button";
 
 
 function Navbar() {
@@ -6,36 +9,33 @@ function Navbar() {
     const navigate = useNavigate()
 
     return (
-        <div className="flex px-4 md:px-8 justify-between w-full h-20 bg-gray-300">
+        <div className="flex px-4 md:px-8 justify-between w-full h-20">
 
             <div className="self-center text-3xl font-bold items-center w-40 flex justify-start">
                 LOGO
             </div>
 
             <div className="flex items-center h-full">
-                <ul className="flex items-center h-full w-max">
+                <ul className="flex items-center h-full w-max gap-3">
                     <li>
-                        <button onClick={() => navigate("/")}>Home</button>
+                        <TextButton onClick={() => navigate("/")}>Home</TextButton>
                     </li>
-                    <div className="h-1/3 mx-6 self-center w-[1px] bg-gray-600"></div>
                     <li>
-                        <button onClick={() => navigate("/experiences")}>Experiences</button>
+                        <TextButton onClick={() => navigate("/experiences")}>Experiences</TextButton>
                     </li>
-                    <div className="h-1/3 mx-6 self-center w-[1px] bg-gray-600"></div>
                     <li>
-                        <button onClick={() => navigate("/online")}>Online</button>
+                        <TextButton onClick={() => navigate("/online")}>Online</TextButton>
                     </li>
                 </ul>
             </div>
 
-            <div className="flex items-center justify-end">
-                <button>
-                    Log in
-                </button>
-                <div className="h-2/3 mx-6 self-center w-[1px] bg-gray-600"></div>
-                <button>
-                    Sign up
-                </button>
+            <div className="flex gap-2 items-center justify-end">
+                <Button onClick={() => {}}>
+                    &nbsp;&nbsp;Sign up&nbsp;&nbsp;
+                </Button>
+                <OutlinedButton onClick={() => {}}>
+                    &nbsp;&nbsp;Log in&nbsp;&nbsp;
+                </OutlinedButton>
             </div>
 
         </div>
