@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import CategoryButton from "./buttons/CategoryButton";
 import { fetchCategories } from "../api";
+import { propertyFiltersStore } from "../stores/propertyFilters";
 
 export default function Categories() {
 
     const [categories, setCategories] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState("")
+    const state = propertyFiltersStore();
 
     useEffect(() => {
         fetchCategories().then((cs) => {
@@ -16,10 +17,10 @@ export default function Categories() {
     }, [])
 
     function onClickCategory(category: string) {
-        if (selectedCategory == category) {
-            setSelectedCategory("")
+        if (state.category == category) {
+            state.setCategory("")
         } else {
-            setSelectedCategory(category)
+            state.setCategory(category)
         }
     }
 
@@ -34,7 +35,7 @@ export default function Categories() {
 
                 {
                     categories.map(c => (
-                        <CategoryButton key={c} onClick={() => onClickCategory(c)} isSelected={selectedCategory == c}>
+                        <CategoryButton key={c} onClick={() => onClickCategory(c)} isSelected={state.category == c}>
                             {c}
                         </CategoryButton>
                     ))

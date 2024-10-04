@@ -1,4 +1,9 @@
+import { propertyFiltersStore } from "../stores/propertyFilters"
+
 export default function Searchbar({ className }: { className: String }) {
+
+    const state = propertyFiltersStore()
+
     return (
         <div className={`w-full max-w-lg min-w-[200px] ${className}`}>
             <div className="relative flex items-center">
@@ -9,6 +14,8 @@ export default function Searchbar({ className }: { className: String }) {
                 <input
                     className="h-10 w-full bg-transparent font-normal placeholder:text-slate-500 text-slate-800 text-sm border border-slate-300 rounded-md pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-900 hover:border-slate-600 shadow-sm focus:shadow"
                     placeholder="UI Kits, Dashboards..."
+                    value={state.searchTerm}
+                    onChange={(ev) => state.setSearchTerm(ev.target.value)}
                 />
             </div>
         </div>
