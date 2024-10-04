@@ -15,6 +15,14 @@ export default function Categories() {
         })
     }, [])
 
+    function onClickCategory(category: string) {
+        if (selectedCategory == category) {
+            setSelectedCategory("")
+        } else {
+            setSelectedCategory(category)
+        }
+    }
+
     return (
         <div className="relative">
 
@@ -26,7 +34,7 @@ export default function Categories() {
 
                 {
                     categories.map(c => (
-                        <CategoryButton key={c} onClick={() => setSelectedCategory(c)} isSelected={selectedCategory == c}>
+                        <CategoryButton key={c} onClick={() => onClickCategory(c)} isSelected={selectedCategory == c}>
                             {c}
                         </CategoryButton>
                     ))
