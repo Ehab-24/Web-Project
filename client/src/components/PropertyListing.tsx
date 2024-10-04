@@ -5,18 +5,15 @@ import { propertyFiltersStore } from "../stores/propertyFilters"
 
 export default function PropertyListing() {
 
-    const [properties, setProperties] = useState<any[]>([])
+    let properties: any[] = []
     const [filteredProperties, setFilteredProperties] = useState<any[]>([])
-
-    useEffect(() => {
-        setFilteredProperties(properties)
-    }, [properties])
 
     useEffect(() => {
         fetchProperties()
             .then(ps => {
                 if (ps) {
-                    setProperties(ps)
+                    properties = ps
+                    setFilteredProperties(ps)
                 }
             })
     }, [])
@@ -49,7 +46,8 @@ export default function PropertyListing() {
 
     const filterPropertiesBySearchTerm = (query: string) => {
         const _query = query.toLowerCase().trim()
-        
+        console.log(`filter by: ${_query}\nproperties: ${properties.length}\nfiltered: ${filteredProperties.length}`);
+
         if (!_query) {
             setFilteredProperties(properties)
             return
@@ -64,10 +62,12 @@ export default function PropertyListing() {
     };
 
     const filterPropertiesByCategory = (category: string) => {
+        console.log(`filter by ${category}`);
+
         if (!category) {
             setFilteredProperties(properties)
         } else {
-            const filtered = filteredProperties.filter(p => p.category == category)
+            const filtered = properties.filter(p => p.category == category)
             setFilteredProperties(filtered)
         }
     }
