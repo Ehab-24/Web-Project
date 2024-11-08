@@ -88,3 +88,11 @@ def listing_detail(request, listing_id):
     elif request.method == "DELETE":
         listing.delete()
         return JsonResponse({"message": "Listing deleted"})
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def search_listings(request):
+    query = request.GET.get("query", "")
+    listings = Listing.objects.filter(location__icontains=query).values()
+    return JsonResponse(list(listings), safe=False)
