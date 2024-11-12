@@ -22,9 +22,6 @@ function Navbar() {
                     <li>
                         <TextButton onClick={() => navigate("/experiences")}>Experiences</TextButton>
                     </li>
-                    <li>
-                        <TextButton onClick={() => navigate("/online")}>Online</TextButton>
-                    </li>
                 </ul>
             </div>
 
