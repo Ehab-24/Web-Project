@@ -1,17 +1,22 @@
-## Running
+# Project Setup
 
-1. Run the server:
+## Prerequisites
+- Node.js (for frontend)
+- Python 3.x, Django, and pip (for backend)
+
+## Instructions
+
+### Backend (Django Server)
+```bash
+cd api
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
 ```
-cd server
+
+### Frontend (React App)
+```bash
+cd ../client
 npm install
-node index.js
+npm start
 ```
-
-2. Run the client:
-```
-cd client
-npm install
-npm run dev
-```
-
-Then open https://127.0.0.1:5173 in a browser
