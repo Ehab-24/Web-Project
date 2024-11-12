@@ -15,6 +15,8 @@ from .sanitizers import sanitize_listing_data, sanitize_booking_data
 def listings(request):
     if request.method == "GET":
         listings = list(Listing.objects.values())
+        for l in listings:
+            l['images'] = l['images'].split(',')
         return JsonResponse(listings, safe=False)
 
     elif request.method == "POST":
@@ -38,10 +40,15 @@ def listing_detail(request, listing_id):
         return JsonResponse({
             "id": listing.id,
             "title": listing.title,
-            "image": listing.image,
-            "description": listing.description,
+            "images": listing.images.split(","),
+            "listing_type": listing.listing_type,
+            "amenities": listing.amenities.split(","),
+            "number_of_guests": listing.number_of_guests,
+            "bedrooms": listing.bedrooms,
+            "bathrooms": listing.bathrooms,
+            "price_per_night": listing.price_per_night,
             "location": listing.location,
-            "price": listing.price,
+            "description": listing.description,
             "rating": listing.rating,
             "time": listing.time,
             "category": listing.category,
@@ -81,7 +88,7 @@ def search_listings(request):
 
 @csrf_exempt
 @require_http_methods(["GET", "POST"])
-def create_booking(request):
+def bookings(request):
 
     if request.method == "GET":
         bookings = list(Booking.objects.values())

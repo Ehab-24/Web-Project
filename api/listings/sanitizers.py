@@ -53,6 +53,6 @@ def sanitize_booking_data(data):
             "check_in": check_in,
             "check_out": check_out,
         }
-    except (ValueError, TypeError):
+    except (ValueError, TypeError) as e:
         print(e)
         return None

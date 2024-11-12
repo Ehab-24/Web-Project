@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import PropertyCard from "./cards/PropertyCard"
-import { fetchProperties } from "../api"
+import * as api from '../api'
 import { propertyFiltersStore } from "../stores/propertyFilters"
 
 export default function PropertyListing() {
@@ -9,7 +9,7 @@ export default function PropertyListing() {
     const [filteredProperties, setFilteredProperties] = useState<any[]>([])
 
     useEffect(() => {
-        fetchProperties()
+        api.listings()
             .then(ps => {
                 if (ps) {
                     properties = ps
@@ -77,7 +77,7 @@ export default function PropertyListing() {
         <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-20">
             {
                 filteredProperties.map(p => (
-                    <PropertyCard key={p.title} title={p.title} image={p.image} description={p.description} location={p.location} price={p.price} rating={p.rating} time={p.time} />
+                    <PropertyCard key={p.id} id={p.id} title={p.title} images={p.images} description={p.description} location={p.location} price_per_night={p.price_per_night} rating={p.rating} time={p.time} />
                 ))
             }
         </div>

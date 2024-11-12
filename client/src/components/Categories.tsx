@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import CategoryButton from "./buttons/CategoryButton";
-import { fetchCategories } from "../api";
+import * as api from "../api";
 import { propertyFiltersStore } from "../stores/propertyFilters";
 
 export default function Categories() {
 
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState<string[]>([])
     const state = propertyFiltersStore();
 
     useEffect(() => {
-        fetchCategories().then((cs) => {
+        api.listingTypes().then((cs) => {
             if (cs) {
                 setCategories(cs)
             }
