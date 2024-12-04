@@ -41,17 +41,23 @@ def sanitize_listing_data(data):
 
 def sanitize_booking_data(data):
     try:
-        user = str(data.get("user", "")).strip()
+        email = str(data.get("email"))
+        adults = int(data.get("adults"))
+        children = int(data.get("children"))
+        special_requests = str(data.get("special_requests"))
         check_in = parse_datetime(data.get("check_in"))
         check_out = parse_datetime(data.get("check_out"))
-        
-        if not user or not check_in or not check_out:
+
+        if not check_in or not check_out or not email or adults is None or children is None:
             return None
         
         return {
-            "user": user,
             "check_in": check_in,
             "check_out": check_out,
+            "email": email,
+            "adults": adults,
+            "children": children,
+            "special_requests": special_requests,
         }
     except (ValueError, TypeError) as e:
         print(e)

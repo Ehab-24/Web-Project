@@ -1,11 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import * as api from "../api"
+import * as TokensManager from "../lib/TokensManager"
 import Spinner from "../components/spinner";
 import SubmitButton from "../components/buttons/SubmitButton";
+import { toast } from "react-toastify";
+import { useAuth } from "../lib/AuthContext";
 
 
-export default function BookListing() {
+export default function BookingPage() {
 
     const { listingId } = useParams()
     const [listing, setListing] = useState<any | null>(null)
@@ -63,10 +66,12 @@ export default function BookListing() {
 
 function BookingForm({ listing }: { listing: any }) {
 
+    const navigate = useNavigate()
+    const { logout } = useAuth()
+
     const [formData, setFormData] = useState({
         checkInDate: "",
         checkOutDate: "",
-        fullName: "",
         email: "",
         adults: 1,
         children: 0,
@@ -81,19 +86,39 @@ function BookingForm({ listing }: { listing: any }) {
         }));
     };
 
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        // Process formData here
 
-        let message = "Property booked"
+        const [access,] = TokensManager.getTokenPair()
+        if (!access) {
+            return
+        }
 
-        api.createBooking(listing.id)
-            .then(res => {
-                if (!!res) {} else {
-                    message = "Error creating booking"
-                }
-                alert(message)
-            })
+        let result = await api.createBooking(
+            access,
+            listing.id,
+            formData.email,
+            formData.adults,
+            formData.children,
+            formData.specialRequests,
+            formData.checkInDate,
+            formData.checkOutDate
+        )
+
+        if (!!result) {
+            if (result === 1) { // Assume that the token has expired
+                toast.warn("Session expired!")
+                logout()
+                navigate('/login')
+            } else if (result === 0) {
+                toast.error("Error creating booking, please try again later.")
+            } else {
+                toast(`Booked ${listing.title}!`)
+                console.log("Booking", result)
+            }
+        } else {
+            toast.error("Error creating booking, please try again later.")
+        }
 
     };
 
@@ -125,17 +150,6 @@ function BookingForm({ listing }: { listing: any }) {
 
             {/* Guest Information */}
             <div className="grid grid-cols-2 gap-4">
-                <div>
-                    <label className="block text-gray-700 font-medium mb-1">Full Name</label>
-                    <input
-                        type="text"
-                        name="fullName"
-                        placeholder="John Doe"
-                        value={formData.fullName}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                    />
-                </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Email</label>
                     <input

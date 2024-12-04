@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Listing(models.Model):
     title = models.CharField(max_length=255)
@@ -19,10 +20,15 @@ class Listing(models.Model):
 
 
 class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    user = models.CharField(max_length=255)
     check_in = models.DateTimeField()
     check_out = models.DateTimeField()
+    email = models.CharField(max_length=1024)
+    adults = models.IntegerField()
+    children = models.IntegerField()
+    special_requests = models.CharField(max_length=2000)
+
     status = models.CharField(max_length=50, default="pending")
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
